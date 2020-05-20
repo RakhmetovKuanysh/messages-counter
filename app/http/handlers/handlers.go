@@ -57,6 +57,7 @@ func GetNbUnread(c *gin.Context, di di.DI) {
 
 	if err != nil {
 		nbCnt, err = di.MessagesAPI.GetNbUnread(receiverid)
+		di.CacheProvider.Set(userId, nbCnt, 86400)
 	}
 
 	c.JSON(http.StatusOK, app.GetNbUnreadResponse{
